@@ -1,0 +1,8 @@
+# DO NOT commit this file - has secrets embedded
+# TODO: generate this via make command as per https://github.com/bioatlas/ala-docker/blob/master/Makefile
+MYSQL_ROOT_PASSWORD=password
+# TZ=Europe/Stockholm
+MYSQL_DATABASE=specieslists
+MYSQL_USER=specieslists
+MYSQL_PASSWORD=specieslists
+API_KEY=

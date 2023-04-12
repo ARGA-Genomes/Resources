@@ -1,0 +1,28 @@
+version: '3.7'
+
+services:
+
+  specieslists:
+    image: ala-specieslists:v0.6
+    container_name: specieslists
+    links:
+      - mysqldbspecieslist
+    environment:
+      JAVA_OPTS: -Xmx1g -Xms128m -Xss256k -Djava.awt.headless=true
+    env_file: ./env/.envspecieslists
+    volumes:
+      - ./config/specieslist-webapp-config.properties:/tmp/specieslist-webapp-config.properties:ro
+      - data_nameindex:/data/lucene/namematching
+    command: /bin/ash -c "envsubst < /tmp/specieslist-webapp-config.properties > /data/specieslist-webapp/config/specieslist-webapp-config.properties && catalina.sh run"
+
+  mysqldbspecieslist:
+    image: mysql:5.7
+    env_file: ./env/.envspecieslists
+    container_name: mysqldbspecieslist
+    command: --sql_mode=""
+    volumes:
+      - ./specieslists/db:/docker-entrypoint-initdb.d
+      - db_data_specieslists:/var/lib/mysql
+
+volumes:
+  db_data_specieslists:
